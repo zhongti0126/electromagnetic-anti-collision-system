@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>IoT Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -13,7 +16,7 @@
 
         .card {
             background: white;
-            width: 300px;
+            width: 350px;
             margin: auto;
             padding: 20px;
             border-radius: 10px;
@@ -29,31 +32,68 @@
             color: green;
             font-weight: bold;
         }
+
+        canvas {
+            margin-top: 30px;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="card">
+
         <h1>🚗 IoT Monitoring Dashboard</h1>
 
-        <p>Temperature: <span id="temperature">--</span> °C</p>
-        <p>Humidity: <span id="humidity">--</span> %</p>
-        <p>Distance: <span id="distance">--</span> cm</p>
+        <p>Temperature:
+            <span id="temperature">--</span> °C
+        </p>
+
+        <p>Humidity:
+            <span id="humidity">--</span> %
+        </p>
+
+        <p>Distance:
+            <span id="distance">--</span> cm
+        </p>
 
         <p>Status:
             <span id="status">--</span>
         </p>
+
     </div>
 
+    <canvas id="temperatureChart" width="400" height="200"></canvas>
+
     <script>
+
+        const ctx = document.getElementById('temperatureChart');
+
+        const temperatureChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Temperature',
+                    data: [],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: false
+            }
+        });
+
         async function fetchData() {
 
             const response = await fetch("http://127.0.0.1:5000/data");
+
             const data = await response.json();
 
             document.getElementById("temperature").innerText = data.temperature;
+
             document.getElementById("humidity").innerText = data.humidity;
+
             document.getElementById("distance").innerText = data.distance;
 
             const statusElement = document.getElementById("status");
@@ -65,12 +105,31 @@
             } else {
                 statusElement.className = "safe";
             }
+
+            temperatureChart.data.labels.push(
+                new Date().toLocaleTimeString()
+            );
+
+            temperatureChart.data.datasets[0].data.push(
+                data.temperature
+            );
+
+            if (temperatureChart.data.labels.length > 10) {
+
+                temperatureChart.data.labels.shift();
+
+                temperatureChart.data.datasets[0].data.shift();
+            }
+
+            temperatureChart.update();
         }
 
         fetchData();
 
         setInterval(fetchData, 2000);
+
     </script>
 
 </body>
+
 </html>
