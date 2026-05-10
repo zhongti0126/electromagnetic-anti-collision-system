@@ -29,6 +29,6 @@ The system is composed of four main modules:
 
    ## 🌐 API Endpoint
 
-The system provides a simple API to retrieve real-time sensor data.
+The system provides a simple API to retrieve real-time sensor data
 
 ### Endpoint
