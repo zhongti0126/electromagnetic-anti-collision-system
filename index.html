@@ -24,8 +24,9 @@
         }
 
         .warning {
-            color: red;
+            color: #ff4d4d;
             font-weight: bold;
+            animation: blink 1s infinite;
         }
 
         .safe {
@@ -35,6 +36,21 @@
 
         canvas {
             margin-top: 30px;
+        }
+
+        @keyframes blink {
+
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -98,12 +114,16 @@
 
             const statusElement = document.getElementById("status");
 
+            const card = document.querySelector(".card");
+
             statusElement.innerText = data.status;
 
             if (data.status === "warning") {
                 statusElement.className = "warning";
+                card.style.border = "3px soild red";
             } else {
                 statusElement.className = "safe";
+                card.style.border = "none";
             }
 
             temperatureChart.data.labels.push(
