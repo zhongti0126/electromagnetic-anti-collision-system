@@ -99,55 +99,74 @@
                 responsive: false
             }
         });
+        function fetchData() {
 
-        async function fetchData() {
+    const data = {
 
-            const response = await fetch("http://127.0.0.1:5000/data");
+        temperature: (20 + Math.random() * 15).toFixed(2),
 
-            const data = await response.json();
+        humidity: (40 + Math.random() * 40).toFixed(2),
 
-            document.getElementById("temperature").innerText = data.temperature;
+        distance: (5 + Math.random() * 95).toFixed(2)
+    };
 
-            document.getElementById("humidity").innerText = data.humidity;
+    if (data.distance < 20) {
+        data.status = "warning";
+    } else {
+        data.status = "safe";
+    }
 
-            document.getElementById("distance").innerText = data.distance;
+    document.getElementById("temperature").innerText =
+        data.temperature;
 
-            const statusElement = document.getElementById("status");
+    document.getElementById("humidity").innerText =
+        data.humidity;
 
-            const card = document.querySelector(".card");
+    document.getElementById("distance").innerText =
+        data.distance;
 
-            statusElement.innerText = data.status;
+    const statusElement =
+        document.getElementById("status");
 
-            if (data.status === "warning") {
-                statusElement.className = "warning";
-                card.style.border = "3px soild red";
-            } else {
-                statusElement.className = "safe";
-                card.style.border = "none";
-            }
+    const card =
+        document.querySelector(".card");
 
-            temperatureChart.data.labels.push(
-                new Date().toLocaleTimeString()
-            );
+    statusElement.innerText = data.status;
 
-            temperatureChart.data.datasets[0].data.push(
-                data.temperature
-            );
+    if (data.status === "warning") {
 
-            if (temperatureChart.data.labels.length > 10) {
+        statusElement.className = "warning";
 
-                temperatureChart.data.labels.shift();
+        card.style.border = "3px solid red";
 
-                temperatureChart.data.datasets[0].data.shift();
-            }
+    } else {
 
-            temperatureChart.update();
-        }
+        statusElement.className = "safe";
 
-        fetchData();
+        card.style.border = "none";
+    }
 
-        setInterval(fetchData, 2000);
+    temperatureChart.data.labels.push(
+        new Date().toLocaleTimeString()
+    );
 
+    temperatureChart.data.datasets[0].data.push(
+        data.temperature
+    );
+
+    if (temperatureChart.data.labels.length > 10) {
+
+        temperatureChart.data.labels.shift();
+
+        temperatureChart.data.datasets[0].data.shift();
+    }
+
+    temperatureChart.update();
+}
+
+fetchData();
+
+setInterval(fetchData, 2000);
     </script>
 
 </body>
