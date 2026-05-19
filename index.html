@@ -79,26 +79,38 @@
 
     </div>
 
-    <canvas id="temperatureChart" width="400" height="200"></canvas>
+    <canvas id="temperatureChart" width="400" height="200">
+    <canvas id="distanceChart" width="400" height="200"></canvas>
 
     <script>
 
         const ctx = document.getElementById('temperatureChart');
 
-        const temperatureChart = new Chart(ctx, {
+        const distanceCtx = document.getElementById('distanceChart');
+
+        const distanceChart = new Chart(distanceCtx, {
+
             type: 'line',
+
             data: {
+
                 labels: [],
+
                 datasets: [{
-                    label: 'Temperature',
+
+                    label: 'Distance',
+
                     data: [],
+
                     borderWidth: 2
                 }]
             },
-            options: {
-                responsive: false
-            }
-        });
+        
+    options: {
+
+        responsive: false
+    }
+});
         function fetchData() {
 
     const data = {
@@ -162,12 +174,28 @@
     }
 
     temperatureChart.update();
-}
+            distanceChart.data.labels.push(
+    new Date().toLocaleTimeString()
+    );
 
-fetchData();
+    distanceChart.data.datasets[0].data.push(
+        data.distance
+    );
 
-setInterval(fetchData, 2000);
-    </script>
+    if (distanceChart.data.labels.length > 10) {
+
+        distanceChart.data.labels.shift();
+
+        distanceChart.data.datasets[0].data.shift();
+    }
+
+    distanceChart.update();
+    }
+
+    fetchData();
+
+    setInterval(fetchData, 2000);
+        </script>
 
 </body>
 
