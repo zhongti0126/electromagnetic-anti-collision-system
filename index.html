@@ -3,24 +3,24 @@
 
 <head>
     <title>IoT Dashboard</title>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
             font-family: Arial;
-            background-color: #f4f4f4;
+            background-color: #0f172a;
+            color: white;
             text-align: center;
             padding-top: 50px;
         }
 
         .card {
-            background: white;
+            background: #1e293b;
             width: 350px;
             margin: auto;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px gray;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
         }
 
         .warning {
@@ -30,27 +30,22 @@
         }
 
         .safe {
-            color: green;
+            color: #22c55e;
             font-weight: bold;
         }
 
         canvas {
             margin-top: 30px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
         }
 
         @keyframes blink {
-
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.3;
-            }
-
-            100% {
-                opacity: 1;
-            }
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
@@ -58,144 +53,106 @@
 <body>
 
     <div class="card">
+        <h1>🚗 Smart IoT Monitoring System</h1>
+        <p>Real-Time Sensor Monitoring Platform</p>
 
-        <h1>🚗 IoT Monitoring Dashboard</h1>
-
-        <p>Temperature:
-            <span id="temperature">--</span> °C
-        </p>
-
-        <p>Humidity:
-            <span id="humidity">--</span> %
-        </p>
-
-        <p>Distance:
-            <span id="distance">--</span> cm
-        </p>
-
-        <p>Status:
-            <span id="status">--</span>
-        </p>
-
+        <p>Temperature: <span id="temperature">--</span> °C</p>
+        <p>Humidity: <span id="humidity">--</span> %</p>
+        <p>Distance: <span id="distance">--</span> cm</p>
+        <p>Status: <span id="status">--</span></p>
     </div>
 
-    <canvas id="temperatureChart" width="400" height="200">
+    <canvas id="temperatureChart" width="400" height="200"></canvas>
     <canvas id="distanceChart" width="400" height="200"></canvas>
 
     <script>
+        const temperatureCtx = document.getElementById('temperatureChart');
 
-        const ctx = document.getElementById('temperatureChart');
+        const temperatureChart = new Chart(temperatureCtx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Temperature',
+                    data: [],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: false
+            }
+        });
 
         const distanceCtx = document.getElementById('distanceChart');
 
         const distanceChart = new Chart(distanceCtx, {
-
             type: 'line',
-
             data: {
-
                 labels: [],
-
                 datasets: [{
-
                     label: 'Distance',
-
                     data: [],
-
                     borderWidth: 2
                 }]
             },
-        
-    options: {
+            options: {
+                responsive: false
+            }
+        });
 
-        responsive: false
-    }
-});
         function fetchData() {
+            const data = {
+                temperature: (20 + Math.random() * 15).toFixed(2),
+                humidity: (40 + Math.random() * 40).toFixed(2),
+                distance: (5 + Math.random() * 95).toFixed(2)
+            };
 
-    const data = {
+            if (data.distance < 20) {
+                data.status = "warning";
+            } else {
+                data.status = "safe";
+            }
 
-        temperature: (20 + Math.random() * 15).toFixed(2),
+            document.getElementById("temperature").innerText = data.temperature;
+            document.getElementById("humidity").innerText = data.humidity;
+            document.getElementById("distance").innerText = data.distance;
 
-        humidity: (40 + Math.random() * 40).toFixed(2),
+            const statusElement = document.getElementById("status");
+            const card = document.querySelector(".card");
 
-        distance: (5 + Math.random() * 95).toFixed(2)
-    };
+            statusElement.innerText = data.status;
 
-    if (data.distance < 20) {
-        data.status = "warning";
-    } else {
-        data.status = "safe";
-    }
+            if (data.status === "warning") {
+                statusElement.className = "warning";
+                card.style.border = "3px solid red";
+            } else {
+                statusElement.className = "safe";
+                card.style.border = "none";
+            }
 
-    document.getElementById("temperature").innerText =
-        data.temperature;
+            const now = new Date().toLocaleTimeString();
 
-    document.getElementById("humidity").innerText =
-        data.humidity;
+            temperatureChart.data.labels.push(now);
+            temperatureChart.data.datasets[0].data.push(data.temperature);
 
-    document.getElementById("distance").innerText =
-        data.distance;
+            distanceChart.data.labels.push(now);
+            distanceChart.data.datasets[0].data.push(data.distance);
 
-    const statusElement =
-        document.getElementById("status");
+            if (temperatureChart.data.labels.length > 10) {
+                temperatureChart.data.labels.shift();
+                temperatureChart.data.datasets[0].data.shift();
 
-    const card =
-        document.querySelector(".card");
+                distanceChart.data.labels.shift();
+                distanceChart.data.datasets[0].data.shift();
+            }
 
-    statusElement.innerText = data.status;
+            temperatureChart.update();
+            distanceChart.update();
+        }
 
-    if (data.status === "warning") {
-
-        statusElement.className = "warning";
-
-        card.style.border = "3px solid red";
-
-    } else {
-
-        statusElement.className = "safe";
-
-        card.style.border = "none";
-    }
-
-    temperatureChart.data.labels.push(
-        new Date().toLocaleTimeString()
-    );
-
-    temperatureChart.data.datasets[0].data.push(
-        data.temperature
-    );
-
-    if (temperatureChart.data.labels.length > 10) {
-
-        temperatureChart.data.labels.shift();
-
-        temperatureChart.data.datasets[0].data.shift();
-    }
-
-    temperatureChart.update();
-            distanceChart.data.labels.push(
-    new Date().toLocaleTimeString()
-    );
-
-    distanceChart.data.datasets[0].data.push(
-        data.distance
-    );
-
-    if (distanceChart.data.labels.length > 10) {
-
-        distanceChart.data.labels.shift();
-
-        distanceChart.data.datasets[0].data.shift();
-    }
-
-    distanceChart.update();
-    }
-
-    fetchData();
-
-    setInterval(fetchData, 2000);
-        </script>
+        fetchData();
+        setInterval(fetchData, 2000);
+    </script>
 
 </body>
 
