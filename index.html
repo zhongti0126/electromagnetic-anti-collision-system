@@ -12,6 +12,7 @@
             color: white;
             text-align: center;
             padding-top: 50px;
+            margin-left: 220px;
         }
 
         .card {
@@ -34,6 +35,51 @@
             font-weight: bold;
         }
 
+        .sidebar {
+
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+    width: 220px;
+
+    height: 100%;
+
+    background: #020617;
+
+    padding-top: 30px;
+
+    color: white;
+}
+
+.sidebar h2 {
+
+    margin-bottom: 40px;
+}
+
+.sidebar ul {
+
+    list-style: none;
+
+    padding: 0;
+}
+
+.sidebar li {
+
+    padding: 15px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.sidebar li:hover {
+
+    background: #1e293b;
+}
+        
         canvas {
             margin-top: 30px;
             margin: 30px auto;
@@ -51,6 +97,19 @@
 </head>
 
 <body>
+
+    <div class="sidebar">
+
+    <h2>🚗 IoT Panel</h2>
+
+    <ul>
+        <li>Dashboard</li>
+        <li>Sensors</li>
+        <li>Analytics</li>
+        <li>System Status</li>
+    </ul>
+
+</div>
 
     <div class="card">
         <h1>🚗 Smart IoT Monitoring System</h1>
