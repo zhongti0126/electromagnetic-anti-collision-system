@@ -69,7 +69,6 @@
         }
         
         canvas {
-            margin-top: 30px;
             margin: 30px auto;
             background: white;
             border-radius: 10px;
@@ -112,7 +111,7 @@
 
 </div>
     
-    <div class="card">
+    <div class="card dashboard-card">
         <h1>🚗 Smart IoT Monitoring System</h1>
         <p>Real-Time Sensor Monitoring Platform</p>
 
@@ -178,52 +177,53 @@
             document.getElementById("distance").innerText = data.distance;
 
             const statusElement = document.getElementById("status");
-            const card = document.querySelector(".card");
+            const card = 
+            document.querySelector(".card");
 
             statusElement.innerText = data.status;
 
-           const statusCard =
-           document.querySelector(".status-card");
+            const statusCard =
+            document.querySelector(".status-card");
 
-           if (data.status === "warning") {
+            if (data.status === "warning") {
 
-           statusElement.className = "warning";
+            statusElement.className = "warning";
 
-           card.style.border = "3px solid red";
+            card.style.border = "3px solid red";
 
-           statusCard.style.border =
-                 "3px solid red";
+            statusCard.style.border =
+                    "3px solid red";
 
-           } else {
+             } else {
 
                 statusElement.className = "safe";
 
                 card.style.border = "none";
 
-                tatusCard.style.border = "none";
-            }
-            const now = new Date().toLocaleTimeString();
+                statusCard.style.border = "none";
+             }
+             const now = new Date().toLocaleTimeString();
 
-            temperatureChart.data.labels.push(now);
-            temperatureChart.data.datasets[0].data.push(data.temperature);
+             temperatureChart.data.labels.push(now);
+             temperatureChart.data.datasets[0].data.push(data.temperature);
 
-            distanceChart.data.labels.push(now);
-            distanceChart.data.datasets[0].data.push(data.distance);
+             distanceChart.data.labels.push(now);
+             distanceChart.data.datasets[0].data.push(data.distance);
 
-            if (temperatureChart.data.labels.length > 10) {
-                temperatureChart.data.labels.shift();
-                temperatureChart.data.datasets[0].data.shift();
+             if (temperatureChart.data.labels.length > 10) {
+                 temperatureChart.data.labels.shift();
+                 temperatureChart.data.datasets[0].data.shift();
 
-                distanceChart.data.labels.shift();
-                distanceChart.data.datasets[0].data.shift();
-            }
+                 distanceChart.data.labels.shift();
+                 distanceChart.data.datasets[0].data.shift();
+             }
 
-            temperatureChart.update();
-            distanceChart.update();
-        }
+             temperatureChart.update();
+             distanceChart.update();
+         }
 
-        fetchData();
-        setInterval(fetchData, 2000);
+         fetchData();
+         setInterval(fetchData, 2000);
     </script>
 
 </body>
