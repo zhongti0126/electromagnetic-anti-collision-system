@@ -188,8 +188,16 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false
-            }
+                maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 30,
+                    bottom: 20,
+                    left: 10,
+                    right: 10
+        }
+    }
+}
         });
 
         function fetchData() {
@@ -224,8 +232,10 @@
 
             card.style.border = "3px solid red";
 
-            statusCard.style.border =
-                    "3px solid red";
+ 
+            statusCard.style.border = "3px solid red";
+            statusCard.style.border = "none";
+                
 
              } else {
 
