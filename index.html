@@ -79,6 +79,7 @@
             margin: 30px auto;
             background: white;
             border-radius: 10px;
+            height: 300px !important;
             padding: 10px;
         }
 
@@ -177,7 +178,8 @@
                 }]
             },
             options: {
-                responsive: false
+                responsive: true,
+                maintainAspectRatio: false
             }
         });
 
@@ -199,7 +201,8 @@
             document.getElementById("distance").innerText = data.distance;
 
             const statusElement = document.getElementById("status");
-            const card = document.querySelector(".card");
+            const card = 
+            document.querySelector(".card");
 
             statusElement.innerText = data.status;
 
