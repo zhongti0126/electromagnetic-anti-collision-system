@@ -110,19 +110,19 @@
 
         <p>
             This dashboard project was developed to simulate
-            an IoT-based monitoring platform.
+            an IoT-based monitoring platform
         </p>
 
         <p>
             The system displays real-time sensor information,
             system status, and warning alerts through an
-            interactive dashboard interface.
+            interactive dashboard interface
         </p>
 
         <p>
             This project was created as a personal learning
             project to improve frontend and IoT system
-            development skills.
+            development skills
         </p>
     </div>
 
@@ -162,8 +162,16 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+            layout: {
+                padding: {
+                top: 30,
+                bottom: 20,
+                left: 10,
+                right: 10
             }
+        }
+    }
         });
 
         const distanceCtx = document.getElementById('distanceChart');
