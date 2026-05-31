@@ -198,6 +198,15 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+            scales: {
+                x: {
+                ticks: {
+                font: {
+                size: 14
+                }
+            }
+         }
+    }
             layout: {
                 padding: {
                     top: 30,
@@ -208,7 +217,8 @@
     }
 }
         });
-
+        let dataCount = 0;
+        
         function fetchData() {
             const data = {
                 temperature: (20 + Math.random() * 15).toFixed(2),
@@ -251,12 +261,9 @@
             statusCard.style.border = "none";
             }
                 
-             const now =
-                new Date().toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
+             dataCount++;
+
+            const now = dataCount;
 
              temperatureChart.data.labels.push(now);
              temperatureChart.data.datasets[0].data.push(data.temperature);
