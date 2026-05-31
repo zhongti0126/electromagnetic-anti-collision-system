@@ -73,6 +73,9 @@
         }
         
         canvas {
+            display: block;
+            width: 800px;
+            max-width: 90%;
             margin: 30px auto;
             background: white;
             border-radius: 10px;
@@ -140,8 +143,8 @@
         <p>🟢 Dashboard : Active</p>
     </div>
 
-    <canvas id="temperatureChart" width="400" height="200"></canvas>
-    <canvas id="distanceChart" width="400" height="200"></canvas>
+    <canvas id="temperatureChart"></canvas>
+    <canvas id="distanceChart"></canvas>
 
     <script>
         const temperatureCtx = document.getElementById('temperatureChart');
@@ -220,7 +223,11 @@
 
                 statusCard.style.border = "none";
              }
-             const now = new Date().toLocaleTimeString();
+             const now =
+                new Date().toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
 
              temperatureChart.data.labels.push(now);
              temperatureChart.data.datasets[0].data.push(data.temperature);
