@@ -91,54 +91,38 @@
 <body>
 
     <div class="sidebar">
+        <h2>🚗 IoT Panel</h2>
 
-    <h2>🚗 IoT Panel</h2>
+        <ul>
+            <li>Dashboard</li>
+            <li>Sensors</li>
+            <li>Analytics</li>
+            <li>System Status</li>
+        </ul>
+    </div>
 
-    <ul>
-        <li>Dashboard</li>
-        <li>Sensors</li>
-        <li>Analytics</li>
-        <li>System Status</li>
-    </ul>
-    
-    <div class="card dashboard-card">
-            <div class="card about-card">
-
+    <div class="card about-card">
         <h2>Project Overview</h2>
 
         <p>
             This dashboard project was developed to simulate
-            an IoT-based monitoring platform
+            an IoT-based monitoring platform.
         </p>
 
         <p>
             The system displays real-time sensor information,
             system status, and warning alerts through an
-            interactive dashboard interface
+            interactive dashboard interface.
         </p>
 
-                
         <p>
             This project was created as a personal learning
             project to improve frontend and IoT system
-            development skills
+            development skills.
         </p>
-
-   </div>
-
-            <div class="card status-card">
-
-            <h2>System Status</h2>
-
-            <p>🟢 Sensor Module : Online</p>
-
-            <p>🟢 API Service : Running</p>
-
-            <p>🟢 Dashboard : Active</p>
-
     </div>
-       
-    </div>
+
+    <div class="card dashboard-card">
         <h1>🚗 Smart IoT Monitoring System</h1>
         <p>Real-Time Sensor Monitoring Platform</p>
 
@@ -146,6 +130,14 @@
         <p>Humidity: <span id="humidity">--</span> %</p>
         <p>Distance: <span id="distance">--</span> cm</p>
         <p>Status: <span id="status">--</span></p>
+    </div>
+
+    <div class="card status-card">
+        <h2>System Status</h2>
+
+        <p>🟢 Sensor Module : Online</p>
+        <p>🟢 API Service : Running</p>
+        <p>🟢 Dashboard : Active</p>
     </div>
 
     <canvas id="temperatureChart" width="400" height="200"></canvas>
@@ -204,8 +196,7 @@
             document.getElementById("distance").innerText = data.distance;
 
             const statusElement = document.getElementById("status");
-            const card = 
-            document.querySelector(".card");
+            const card = document.querySelector(".card");
 
             statusElement.innerText = data.status;
 
