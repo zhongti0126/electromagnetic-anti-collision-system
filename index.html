@@ -185,38 +185,39 @@
 
         const distanceCtx = document.getElementById('distanceChart');
 
-        const distanceChart = new Chart(distanceCtx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Distance',
-                    data: [],
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-            scales: {
-                x: {
+const distanceChart = new Chart(distanceCtx, {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Distance',
+            data: [],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+                top: 40,
+                bottom: 60,
+                left: 20,
+                right: 20
+            }
+        },
+        scales: {
+            x: {
                 ticks: {
-                font: {
-                size: 14
+                    font: {
+                        size: 14
+                    }
                 }
             }
-         }
-    }
-            layout: {
-                padding: {
-                    top: 30,
-                    bottom: 80,
-                    left: 10,
-                    right: 10
         }
     }
-}
-        });
+});
+
         let dataCount = 0;
         
         function fetchData() {
@@ -242,10 +243,6 @@
 
             statusElement.innerText = data.status;
 
-            const statusCard =
-            document.querySelector(".status-card");
-
- 
             if (data.status === "warning") {
 
             statusElement.className = "warning";
