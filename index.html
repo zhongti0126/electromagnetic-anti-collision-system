@@ -83,10 +83,12 @@
         
         canvas {
             display: block;
-            width: 800px;
-            max-width: 90%;
-            height: 350px !important;
+            width: 1000px;
+            max-width: 95%;
+            height: 450px !important;
+
             margin: 30px auto;
+
             background: white;
             border-radius: 10px;
         }
@@ -157,27 +159,41 @@
     <canvas id="distanceChart"></canvas>
 
     <script>
-    const chartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-            padding: {
-                top: 40,
-                bottom: 60,
-                left: 20,
-                right: 20
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    font: {
-                        size: 14
-                    }
+   const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    plugins: {
+        legend: {
+            labels: {
+                color: "black",
+                font: {
+                    size: 16
                 }
             }
         }
-    };
+    },
+
+    scales: {
+        x: {
+            ticks: {
+                color: "black",
+                font: {
+                    size: 14
+                }
+            }
+        },
+
+        y: {
+            ticks: {
+                color: "black",
+                font: {
+                    size: 14
+                }
+            }
+        }
+    }
+};
 
     const temperatureCtx = document.getElementById("temperatureChart");
 
