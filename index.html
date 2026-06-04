@@ -157,45 +157,7 @@
     <canvas id="distanceChart"></canvas>
 
     <script>
-        const temperatureCtx = document.getElementById('temperatureChart');
-
-        const temperatureChart = new Chart(temperatureCtx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Temperature',
-                    data: [],
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                layout: {
-            padding: {
-                top: 40,
-                bottom: 80,
-                left: 20,
-                right: 20
-            }
-        }
-    }
-        });
-
-        const distanceCtx = document.getElementById('distanceChart');
-
-const distanceChart = new Chart(distanceCtx, {
-    type: 'line',
-    data: {
-        labels: [],
-        datasets: [{
-            label: 'Distance',
-            data: [],
-            borderWidth: 2
-        }]
-    },
-    options: {
+    const chartOptions = {
         responsive: true,
         maintainAspectRatio: false,
         layout: {
@@ -215,74 +177,88 @@ const distanceChart = new Chart(distanceCtx, {
                 }
             }
         }
-    }
-});
+    };
 
-        let dataCount = 0;
-        
-        function fetchData() {
-            const data = {
-                temperature: (20 + Math.random() * 15).toFixed(2),
-                humidity: (40 + Math.random() * 40).toFixed(2),
-                distance: (5 + Math.random() * 95).toFixed(2)
-            };
+    const temperatureCtx = document.getElementById("temperatureChart");
 
-            if (data.distance < 20) {
-                data.status = "warning";
-            } else {
-                data.status = "safe";
-            }
+    const temperatureChart = new Chart(temperatureCtx, {
+        type: "line",
+        data: {
+            labels: [],
+            datasets: [{
+                label: "Temperature",
+                data: [],
+                borderWidth: 2
+            }]
+        },
+        options: chartOptions
+    });
 
-            document.getElementById("temperature").innerText = data.temperature;
-            document.getElementById("humidity").innerText = data.humidity;
-            document.getElementById("distance").innerText = data.distance;
+    const distanceCtx = document.getElementById("distanceChart");
 
-            const statusElement = document.getElementById("status");
-            const card =
-            document.querySelector(".dashboard-card");
+    const distanceChart = new Chart(distanceCtx, {
+        type: "line",
+        data: {
+            labels: [],
+            datasets: [{
+                label: "Distance",
+                data: [],
+                borderWidth: 2
+            }]
+        },
+        options: chartOptions
+    });
 
-            statusElement.innerText = data.status;
+    let dataCount = 0;
 
-            if (data.status === "warning") {
+    function fetchData() {
+        const data = {
+            temperature: Number((20 + Math.random() * 15).toFixed(2)),
+            humidity: Number((40 + Math.random() * 40).toFixed(2)),
+            distance: Number((5 + Math.random() * 95).toFixed(2))
+        };
 
+        data.status = data.distance < 20 ? "warning" : "safe";
+
+        document.getElementById("temperature").innerText = data.temperature;
+        document.getElementById("humidity").innerText = data.humidity;
+        document.getElementById("distance").innerText = data.distance;
+
+        const statusElement = document.getElementById("status");
+        const card = document.querySelector(".dashboard-card");
+
+        statusElement.innerText = data.status;
+
+        if (data.status === "warning") {
             statusElement.className = "warning";
-
             card.style.border = "3px solid red";
-
-            } else {
-
+        } else {
             statusElement.className = "safe";
-
             card.style.border = "none";
+        }
 
-            statusCard.style.border = "none";
-            }
-                
-             dataCount++;
+        dataCount++;
 
-            const now = dataCount;
+        temperatureChart.data.labels.push(dataCount);
+        temperatureChart.data.datasets[0].data.push(data.temperature);
 
-             temperatureChart.data.labels.push(now);
-             temperatureChart.data.datasets[0].data.push(data.temperature);
+        distanceChart.data.labels.push(dataCount);
+        distanceChart.data.datasets[0].data.push(data.distance);
 
-             distanceChart.data.labels.push(now);
-             distanceChart.data.datasets[0].data.push(data.distance);
+        if (temperatureChart.data.labels.length > 10) {
+            temperatureChart.data.labels.shift();
+            temperatureChart.data.datasets[0].data.shift();
+            distanceChart.data.labels.shift();
+            distanceChart.data.datasets[0].data.shift();
+        }
 
-             if (temperatureChart.data.labels.length > 10) {
-                 temperatureChart.data.labels.shift();
-                 temperatureChart.data.datasets[0].data.shift();
+        temperatureChart.update();
+        distanceChart.update();
+    }
 
-                 distanceChart.data.labels.shift();
-                 distanceChart.data.datasets[0].data.shift();
-             }
-
-             temperatureChart.update();
-             distanceChart.update();
-         }
-
-         fetchData();
-         setInterval(fetchData, 2000);
-    </script>
+    fetchData();
+    setInterval(fetchData, 2000);
+</script>
 
 </body>
 
