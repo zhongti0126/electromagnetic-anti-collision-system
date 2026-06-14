@@ -301,6 +301,17 @@
         };
 
         data.status = data.distance < 20 ? "warning" : "safe";
+        let riskLevel = "";
+
+        if (data.distance < 20) {
+            riskLevel = "High";
+        }
+        else if (data.distance < 50) {
+            riskLevel = "Medium";
+        }
+        else {
+            riskLevel = "Low";
+        }
 
         document.getElementById("temperature").innerText = data.temperature;
         document.getElementById("humidity").innerText = data.humidity;
@@ -338,16 +349,6 @@
         temperatureChart.update();
         distanceChart.update();
     }
-
-        let riskLevel = "";
-
-if (data.distance < 20) {
-    riskLevel = "High";
-} else if (data.distance < 50) {
-    riskLevel = "Medium";
-} else {
-    riskLevel = "Low";
-}
 
     fetchData();
     setInterval(fetchData, 2000);
