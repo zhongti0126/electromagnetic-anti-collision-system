@@ -92,8 +92,7 @@
 
         .sensor-grid {
             display: grid;
-            grid-template-columns:
-            repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             margin-top: 30px;
         }
@@ -135,6 +134,10 @@
         .subtitle {
             opacity: 0.8;
             margin-bottom: 20px;
+        }
+        
+        .risk {
+            color: #f97316;
         }
         
        canvas {
@@ -302,6 +305,7 @@
         document.getElementById("temperature").innerText = data.temperature;
         document.getElementById("humidity").innerText = data.humidity;
         document.getElementById("distance").innerText = data.distance;
+        document.getElementById("risk").innerText = riskLevel;
 
         const statusElement = document.getElementById("status");
         const card = document.querySelector(".dashboard-card");
@@ -334,6 +338,16 @@
         temperatureChart.update();
         distanceChart.update();
     }
+
+        let riskLevel = "";
+
+if (data.distance < 20) {
+    riskLevel = "High";
+} else if (data.distance < 50) {
+    riskLevel = "Medium";
+} else {
+    riskLevel = "Low";
+}
 
     fetchData();
     setInterval(fetchData, 2000);
