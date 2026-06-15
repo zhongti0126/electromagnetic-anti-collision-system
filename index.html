@@ -7,12 +7,11 @@
 
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             background-color: #0f172a;
             color: white;
             text-align: center;
             padding-top: 50px;
-            margin-left: 220px;
         }
 
         .card {
@@ -20,74 +19,22 @@
             width: 350px;
             margin: 20px auto;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
         }
 
-        .dashboard-card {
-            width: 1100px;
-            max-width: 95%;
-        }
-
-        .warning {
-            color: #ff4d4d;
-            font-weight: bold;
-            animation: blink 1s infinite;
-        }
-
-        .safe {
-            color: #22c55e;
-            font-weight: bold;
-        }
-
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 220px;
-            height: 100%;
-            background: #020617;
-            padding-top: 30px;
-            color: white;
-        }
-
-        .sidebar h2 {
-            margin-bottom: 40px;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar li {
-            padding: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .sidebar li:hover {
-            background: #1e293b;
-        }
-        .status-card {
-            margin-top: 20px;
+        .about-card {
+            width: 600px;
+            max-width: 90%;
         }
 
         .about-card p {
             line-height: 1.6;
         }
 
-        .chart-container {
-            width: 900px;
-            max-width: 90%;
-            height: 350px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 10px;
-        }
-
-        .architecture-card p {
-            margin: 10px 0;
+        .dashboard-card {
+            width: 1100px;
+            max-width: 95%;
         }
 
         .sensor-grid {
@@ -98,7 +45,6 @@
         }
 
         .sensor-box {
-
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
@@ -111,7 +57,7 @@
         }
 
         .value {
-            font-size: 32px;
+            font-size: 30px;
             font-weight: bold;
         }
 
@@ -131,30 +77,68 @@
             color: #22c55e;
         }
 
+        .risk {
+            color: #f97316;
+        }
+
+        .warning {
+            color: #ff4d4d;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+
+        .safe {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
         .subtitle {
             opacity: 0.8;
             margin-bottom: 20px;
         }
-        
-        .risk {
-            color: #f97316;
+
+        .status-card,
+        .health-card {
+            width: 600px;
+            max-width: 90%;
         }
-        
-       canvas {
+
+        canvas {
             display: block;
-            width: 1100px !important;
-            height: 450px !important;
+            width: 900px;
+            height: 360px !important;
             margin: 30px auto;
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
         }
-        
+
         @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
-        
+
+        @media (max-width: 900px) {
+            .sensor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-card {
+                width: 90%;
+            }
+
+            canvas {
+                width: 90%;
+            }
+        }
     </style>
 </head>
 
@@ -164,20 +148,18 @@
         <h2>Project Overview</h2>
 
         <p>
-            This dashboard project was developed to simulate
-            an IoT-based monitoring platform
+            This dashboard project was developed to simulate an IoT-based
+            monitoring platform.
         </p>
 
         <p>
-            The system displays real-time sensor information,
-            system status, and warning alerts through an
-            interactive dashboard interface
+            The system displays real-time sensor information, system status,
+            and warning alerts through an interactive dashboard interface.
         </p>
 
         <p>
-            This project was created as a personal learning
-            project to improve frontend and IoT system
-            development skills
+            This project was created as a personal learning project to improve
+            frontend and IoT system development skills.
         </p>
     </div>
 
@@ -189,189 +171,223 @@
         </p>
 
         <div class="sensor-grid">
+
             <div class="sensor-box">
                 <div class="icon">🌡️</div>
                 <h3>Temperature</h3>
-                <p class="value temp"><span id="temperature">--</span> °C</p>
+                <p class="value temp">
+                    <span id="temperature">--</span> °C
+                </p>
             </div>
 
             <div class="sensor-box">
                 <div class="icon">💧</div>
                 <h3>Humidity</h3>
-                <p class="value humidity"><span id="humidity">--</span> %</p>
+                <p class="value humidity">
+                    <span id="humidity">--</span> %
+                </p>
             </div>
 
             <div class="sensor-box">
                 <div class="icon">📏</div>
                 <h3>Distance</h3>
-                <p class="value distance"><span id="distance">--</span> cm</p>
+                <p class="value distance">
+                    <span id="distance">--</span> cm
+                </p>
             </div>
 
             <div class="sensor-box">
-            <div class="icon">🛡️</div>
-            <h3>Status</h3>
-            <p class="value status">
-                <span id="status">--</span>
-            </p>
+                <div class="icon">🛡️</div>
+                <h3>Status</h3>
+                <p class="value status">
+                    <span id="status">--</span>
+                </p>
             </div>
 
             <div class="sensor-box">
-            <div class="icon">🚨</div>
-            <h3>Risk</h3>
-            <p class="value risk">
-                <span id="risk">--</span>
-            </p>
-        </div>
-        </div>
-    <div class="card status-card">
-    <h2>System Status</h2>
+                <div class="icon">🚨</div>
+                <h3>Risk</h3>
+                <p class="value risk">
+                    <span id="risk">--</span>
+                </p>
+            </div>
 
-    <p>📡 Sensor Status : Active</p>
-    <p>⚙️ Data Processing : Running</p>
-    <p>📊 Dashboard Service : Online</p>
-    <p>🚨 Collision Detection : Enabled</p>
+        </div>
     </div>
 
-    <div class="card">
-    <h2>System Health</h2>
+    <div class="card status-card">
+        <h2>System Status</h2>
 
-    <p>🟢 Sensor Connection : Stable</p>
-    <p>🟢 Data Update Rate : 2 Seconds</p>
-    <p>🟢 API Response : Normal</p>
-    <p>🟢 Dashboard Performance : Good</p>
-</div>
+        <p>📡 Sensor Status : Active</p>
+        <p>⚙️ Data Processing : Running</p>
+        <p>📊 Dashboard Service : Online</p>
+        <p>🚨 Collision Detection : Enabled</p>
+    </div>
 
-<canvas id="temperatureChart"></canvas>
-<canvas id="distanceChart"></canvas>
+    <div class="card health-card">
+        <h2>System Health</h2>
+
+        <p>🟢 Sensor Connection : Stable</p>
+        <p>🟢 Data Update Rate : 2 Seconds</p>
+        <p>🟢 API Response : Normal</p>
+        <p>🟢 Dashboard Performance : Good</p>
+    </div>
+
+    <canvas id="temperatureChart"></canvas>
+    <canvas id="distanceChart"></canvas>
 
     <script>
-   const chartOptions = {
-    responsive: false,
-    maintainAspectRatio: false,
+        const chartOptions = {
+            responsive: false,
+            maintainAspectRatio: false,
 
-    plugins: {
-        legend: {
-            labels: {
-                color: "black",
-                font: {
-                    size: 14
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "black",
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            },
+
+            scales: {
+                x: {
+                    ticks: {
+                        color: "black",
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+
+                y: {
+                    ticks: {
+                        color: "black",
+                        font: {
+                            size: 14
+                        }
+                    }
                 }
             }
-        }
-    },
-
-    scales: {
-        x: {
-            ticks: {
-                color: "black",
-                font: {
-                    size: 14
-                }
-            }
-        },
-        y: {
-            ticks: {
-                color: "black",
-                font: {
-                    size: 14
-                }
-            }
-        }
-    }
-};
-
-    const temperatureCtx = document.getElementById("temperatureChart");
-
-    const temperatureChart = new Chart(temperatureCtx, {
-        type: "line",
-        data: {
-            labels: [],
-            datasets: [{
-                label: "Temperature",
-                data: [],
-                borderWidth: 2
-            }]
-        },
-        options: chartOptions
-    });
-
-    const distanceCtx = document.getElementById("distanceChart");
-
-    const distanceChart = new Chart(distanceCtx, {
-        type: "line",
-        data: {
-            labels: [],
-            datasets: [{
-                label: "Distance",
-                data: [],
-                borderWidth: 2
-            }]
-        },
-        options: chartOptions
-    });
-
-    let dataCount = 0;
-
-    function fetchData() {
-        const data = {
-            temperature: Number((20 + Math.random() * 15).toFixed(2)),
-            humidity: Number((40 + Math.random() * 40).toFixed(2)),
-            distance: Number((5 + Math.random() * 95).toFixed(2))
         };
 
-        data.status = data.distance < 20 ? "warning" : "safe";
-        let riskLevel = "";
+        const temperatureCtx =
+            document.getElementById("temperatureChart");
 
-        if (data.distance < 20) {
-            riskLevel = "High";
+        const temperatureChart = new Chart(temperatureCtx, {
+            type: "line",
+
+            data: {
+                labels: [],
+
+                datasets: [{
+                    label: "Temperature",
+                    data: [],
+                    borderWidth: 2
+                }]
+            },
+
+            options: chartOptions
+        });
+
+        const distanceCtx =
+            document.getElementById("distanceChart");
+
+        const distanceChart = new Chart(distanceCtx, {
+            type: "line",
+
+            data: {
+                labels: [],
+
+                datasets: [{
+                    label: "Distance",
+                    data: [],
+                    borderWidth: 2
+                }]
+            },
+
+            options: chartOptions
+        });
+
+        let dataCount = 0;
+
+        function fetchData() {
+            const data = {
+                temperature: Number((20 + Math.random() * 15).toFixed(2)),
+                humidity: Number((40 + Math.random() * 40).toFixed(2)),
+                distance: Number((5 + Math.random() * 95).toFixed(2))
+            };
+
+            data.status =
+                data.distance < 20 ? "warning" : "safe";
+
+            let riskLevel = "";
+
+            if (data.distance < 20) {
+                riskLevel = "High";
+            }
+            else if (data.distance < 50) {
+                riskLevel = "Medium";
+            }
+            else {
+                riskLevel = "Low";
+            }
+
+            document.getElementById("temperature").innerText =
+                data.temperature;
+
+            document.getElementById("humidity").innerText =
+                data.humidity;
+
+            document.getElementById("distance").innerText =
+                data.distance;
+
+            document.getElementById("risk").innerText =
+                riskLevel;
+
+            const statusElement =
+                document.getElementById("status");
+
+            const card =
+                document.querySelector(".dashboard-card");
+
+            statusElement.innerText =
+                data.status;
+
+            if (data.status === "warning") {
+                statusElement.className = "warning";
+                card.style.border = "3px solid red";
+            }
+            else {
+                statusElement.className = "safe";
+                card.style.border = "none";
+            }
+
+            dataCount++;
+
+            temperatureChart.data.labels.push(dataCount);
+            temperatureChart.data.datasets[0].data.push(data.temperature);
+
+            distanceChart.data.labels.push(dataCount);
+            distanceChart.data.datasets[0].data.push(data.distance);
+
+            if (temperatureChart.data.labels.length > 10) {
+                temperatureChart.data.labels.shift();
+                temperatureChart.data.datasets[0].data.shift();
+
+                distanceChart.data.labels.shift();
+                distanceChart.data.datasets[0].data.shift();
+            }
+
+            temperatureChart.update();
+            distanceChart.update();
         }
-        else if (data.distance < 50) {
-            riskLevel = "Medium";
-        }
-        else {
-            riskLevel = "Low";
-        }
 
-        document.getElementById("temperature").innerText = data.temperature;
-        document.getElementById("humidity").innerText = data.humidity;
-        document.getElementById("distance").innerText = data.distance;
-        document.getElementById("risk").innerText = riskLevel;
-
-        const statusElement = document.getElementById("status");
-        const card = document.querySelector(".dashboard-card");
-
-        statusElement.innerText = data.status;
-
-        if (data.status === "warning") {
-            statusElement.className = "warning";
-            card.style.border = "3px solid red";
-        } else {
-            statusElement.className = "safe";
-            card.style.border = "none";
-        }
-
-        dataCount++;
-
-        temperatureChart.data.labels.push(dataCount);
-        temperatureChart.data.datasets[0].data.push(data.temperature);
-
-        distanceChart.data.labels.push(dataCount);
-        distanceChart.data.datasets[0].data.push(data.distance);
-
-        if (temperatureChart.data.labels.length > 10) {
-            temperatureChart.data.labels.shift();
-            temperatureChart.data.datasets[0].data.shift();
-            distanceChart.data.labels.shift();
-            distanceChart.data.datasets[0].data.shift();
-        }
-
-        temperatureChart.update();
-        distanceChart.update();
-    }
-
-    fetchData();
-    setInterval(fetchData, 2000);
-</script>
+        fetchData();
+        setInterval(fetchData, 2000);
+    </script>
 
 </body>
 
