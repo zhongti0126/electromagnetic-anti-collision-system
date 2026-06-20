@@ -219,6 +219,13 @@
                     <span id="updateTime">--</span>
                 </p>
             </div>
+            <div class="sensor-box">
+                <div class="icon">📈</div>
+                <h3>Records</h3>
+                <p class="value">
+                    <span id="records">0</span>
+                </p>
+        </div>
 
         </div>
     </div>
@@ -354,6 +361,9 @@
 
             document.getElementById("risk").innerText =
                 riskLevel;
+
+            document.getElementById("records").innerText =
+                dataCount;
 
             document.getElementById("updateTime").innerText =
             new Date().toLocaleTimeString();
