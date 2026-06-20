@@ -212,6 +212,14 @@
                 </p>
             </div>
 
+            <div class="sensor-box">
+                <div class="icon">🕒</div>
+                <h3>Last Update</h3>
+                <p class="value">
+                    <span id="updateTime">--</span>
+                </p>
+            </div>
+
         </div>
     </div>
 
@@ -346,6 +354,9 @@
 
             document.getElementById("risk").innerText =
                 riskLevel;
+
+            document.getElementById("updateTime").innerText =
+            new Date().toLocaleTimeString();
 
             const statusElement =
                 document.getElementById("status");
