@@ -376,10 +376,9 @@
 
             document.getElementById("risk").innerText =
                 riskLevel;
-
-            document.getElementById("records").innerText =
-                dataCount;
-
+            
+            dataCount++; 
+            
             document.getElementById("records").innerText =
                 dataCount;
 
@@ -398,13 +397,16 @@
             if (data.status === "warning") {
                 statusElement.className = "warning";
                 card.style.border = "3px solid red";
+
+                const alertList = document.getElementById("alerts");
+                const item = document.createElement("li");
+                item.innerText = "Collision Warning - " + new Date().toLocaleTimeString();
+                alertList.prepend(item);
             }
             else {
                 statusElement.className = "safe";
                 card.style.border = "none";
             }
-
-            dataCount++;
 
             temperatureChart.data.labels.push(dataCount);
             temperatureChart.data.datasets[0].data.push(data.temperature);
@@ -422,17 +424,6 @@
 
             temperatureChart.update();
             distanceChart.update();
-        }
-        
-        if(data.distance < 20){
-
-        const alertList =
-        document.getElementById("alerts");
-        const item =
-        document.createElement("li");
-        item.innerText =
-        "Collision Warning";
-        alertList.prepend(item);
         }
 
         fetchData();
